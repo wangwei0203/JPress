@@ -1,0 +1,262 @@
+本小节总结：
+项目目录搭建
+   1.base：所有page页面基类，page页面公共方法目录
+   2.page：页面对象目录
+   3.scripts:测试脚本
+   4.image：失败图片存储目录
+   5.report：测试报告存储目录
+   6.data：测试数据存储目录
+   7.log：脚本运行日志存储目录
+   8.tool：工具类存储目录
+
+本小节总结：
+Jpress后台登录功能（步骤分析、公共方法抽取、base结构搭建）
+    一.重点
+    （a）base封装思路
+       根据用例执行业务步骤进行分析页面公共方法进行抽取
+
+    （b）登录业务所需公共方法抽取
+        .初始化
+        .查找元素封装
+        .输入方法封装
+        .点击元素封装
+        .获取元素文本
+
+     二.辅助
+      （a）模块名编写建议
+             base.py
+
+       (b) 类名编写建议
+             大驼峰方式将模块名抄进来，有下划线去掉下划线  如：Base
+
+       (c) 函数名编写建议
+              base+下划线+动词+(名词) 如：base_input
+
+本小节总结：
+登录--查找元素方法实现
+方式一：
+def base_find(self, loc):
+    return WebDriverWait(self.driver, 15).until(lambda x: x.find_element(*loc))
+
+方式二：
+def base_find(self, loc, timeout=30, poll_frequency=0.5):
+     return WebDriverWait(self.driver,
+                          timeout=timeout,
+                          poll_frequency=poll_frequency).until(lambda x: x.find_element(*loc))
+    一.重点
+     （a）显示等待优点：
+        . 返回元素
+        . 可以修改查找频率
+
+      （b）参数
+         . loc为元组或列表（*loc为解包==loc[0],loc[1]）元素定位信息使用By类
+         . 匿名函数参数x为driver
+
+       （c）return
+         . 返回元素,为其他公共方法所调用
+
+     二.回顾
+       （a）元素等待
+          . 显示等待
+          . 隐式等待
+          . 强制等待
+
+
+本小节总结：
+登录base目录方法实现(输入、点击、查找元素文本)
+    一.重点
+        （a）输入方法步骤：
+         def base_input(self, loc, text):
+            . 获取元素
+            el = self.base_find(loc)
+            . 清空操作
+            el.clear()
+            . 输入操作（参数）
+            el.send_keys(text)
+
+         （b）点击方法封装
+         def base_click(self, loc):
+            # 获取元素并点击
+            self.base_find(loc).click()
+
+         （c）获取元素文本
+             . 注意：return
+         def base_get_text(self, loc):
+            return self.base_find(loc).text
+
+
+本小节总结：
+登录page目录（page目录结构搭建、统一入口类编写）
+    一.重点
+      a.page封装思路
+        根据用例业务操作步骤，将每步操作进行单独封装及业务组合调用方法
+      b.登录page页面封装
+        a.输入用户名
+        b.输入密码
+        c.输入验证码
+        d.点击登录按钮
+        e.获取文本方法
+        f.组合业务方法
+
+      c.统一入口类编写
+        """
+         统一入口类编写
+        """
+        from page.loginPage import LoginPage
+        class PageIn:
+           def __init__(self, driver):
+            self.driver = driver
+
+           # 获取LoginPage对象
+           def page_get_LoginPage(self):
+            return LoginPage(self.driver)
+
+
+    二.辅助
+      a.模块名编写建议
+         page+下划线+模块名.py 如：page_login.py
+
+      b.大驼峰方式将模块名抄进来，有下划线去掉下划线 如：PageLogin
+      c.函数名编写建议：
+          page+下划线+动词+下划线+名称.py 如：
+
+
+本小节总结：
+登录page目录（元素配置信息整理）
+    一.重点
+        (a) 元素配置信息统一存放管理 page目录:（__init__.py）
+            """以下为jpress登录url"""
+            # 登录url
+            url_login = "http://localhost:8088/jpress/admin/login"
+
+            """
+                以下数据为Jpress登录模块配置数据
+            """
+            from selenium.webdriver.common.by import By
+            # 账号
+            user = (By.NAME, 'user')
+            # 密码
+            pwd = (By.NAME, 'pwd')
+            # 验证码
+            captcha = (By.NAME, 'captcha')
+            # 登录按钮
+            longinBtn = (By.CLASS_NAME, 'btn')
+
+        （b）能使用css选择器定位，不使用xpath定位
+
+    二.提示
+        css选择器中[属性名='属性值']为属性选择器，属性名无需添加@修饰
+
+
+本小节总结：
+登录page目录（结构方法编写）
+    一.重点
+        （a）读取__init__.py配置信息，使用：包名.变量
+        （b）组合业务方法一般填写在一个页面中操作的步骤，跨页面不填写，方便处理后续业务
+
+    二.提示
+        （a）调用输入、点击、获取文本方法无需在单独调用查找方法
+
+
+本小节总结：
+登录scripts目录（测试业务层结构搭建）
+    一.重点
+    （1）初始化方法和销毁（结束）方法选择：
+       a.如果有多条参数化数据，采用类方法
+       b.如果没有参数化数据，使用类方法或函数方法没有区别
+
+    （2）调用业务层page方法
+       a.通过统一入口类（PageIn）来实践
+
+    （3）测试业务层常用方法：
+        a.初始化
+        b.结束（销毁）
+        c.测试业务方法
+
+本小节总结：
+driver（获取driver、退出driver）
+    一.重点：
+    1.获取driver和退出driver方法使用类方法（方便使用--不用示例化）
+    2.driver为类属性，设置之前必须进行判断是否为空（目的：保存多次调用获取方法，返回同一个对象）
+    3.返回driver语句和if判断为统一层级
+    4.关闭driver必须置空操作
+      a.driver执行quit方法后对象地址保留，不为空
+      b.避免下条用例调用获取driver能正常获取对象，必须置空
+
+      from selenium import webdriver
+      class GetDriver:
+         # 1.声明变量
+         _web_driver = None
+
+         # 2.获取driver方法
+         @classmethod
+         def get_web_driver(cls, url):
+            # 判断是否为空
+            if cls._web_driver is None:
+               # 设置driver操作
+               # 1.获取浏览器
+               cls._web_driver = webdriver.Chrome()
+
+               # 2.最大化浏览器
+               cls._web_driver.maximize_window()
+
+               # 3.打开url
+               cls._web_driver.get(url)
+
+            # 返回driver
+            return cls._web_driver
+
+        # 3.退出driver方法
+        @classmethod
+        def quit_web_driver(cls):
+            # 判断driver不为空
+            if cls._web_driver:
+                # 退出操作
+                cls._web_driver.quit()
+                # 置空操作(重点)
+                cls._web_driver = None
+
+
+
+本小节总结：
+登录（测试脚本实现、pytest.ini配置文件）
+    一.重点
+        1.关闭driver只能调用封装的quit_driver方法（原因：quit_driver方法中退出driver后，进行了置空操作）
+        2.由于电脑运行速度原因，点击登录按钮之前建议增加1-2秒暂停时间
+        3.pytest配置文件
+          （a）名称：pytest.ini   ---> pytest的主配置文件
+          （b）路径：项目根目录文件夹下
+        4.将sys.path.append(os.getcwd())方法在scripts目录下__init__.py中，可以避免多次编写问题（记得导包sys\os）
+        5.配置文件项说明：
+            [pytest]
+            addopts = -vs --alluredir report   添加了一些pytest.main()执行时候常用的函数
+            testpaths = ./scripts              # 配置当前script目录测试用例路径  可自定义配置
+            python_files = test*.py            # 配置测试搜索的模块文件名称
+            python_classes = Test*             # 配置测试搜索的测试类名
+            python_functions = test*           # 配置测试搜索的测试函数名
+
+            pytest执行用例命令行参数
+               1.-v:  pytest -v 说明：可以输出用例更加详细的执行信息，比如用例所在的文件及用例名称等
+               2.-s:　 pytest -s 说明：输入我们用例中的调式信息，比如print的打印信息等，我们在上面用例8行加上一句 print(driver.title)，我们再运行一下我们的用例看看
+               3.-m:   pytest -m ”标记“ 说明：执行特定的测试用例。我们再次修改一下我们的用例，并添加一个新的用例
+               4.-k:   pytest -k "关键字" 说明：执行用例包含“关键字”的用例
+               5.-q:   pytest -q 说明：简化控制台的输出，可以看出输出信息和上面的结果都不一样， 下图中有两个..点代替了pass结果
+
+本小节总结：
+登录（断言、参数化）
+    一.重点
+        1.断言：让程序代替人工对程序执行结果验证的过程
+                相等： assert a == b
+                属于: assert h in hello
+                布尔型： assert True/False
+
+        2.断言必须进行捕获异常错误信息，断言出现异常要配合（日志、截图、抛异常一起使用）
+        3.解析yaml文件方法：yaml.safe_load(f)
+        4.参数化引用：@pytest.mark.parametrize("参数1,参数2,参数3",列表嵌套元组)
+
+
+
+
+
+
+

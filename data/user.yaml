@@ -1,0 +1,17 @@
+login001:
+  user: "jack"
+  pwd: ""
+  captcha: "8888"
+
+
+#login002:
+#  user: "王佳"
+#  pwd: ""
+#  captcha: "6666"
+
+
+#login003:
+#  -
+#    user: xiaobao
+#    pwd: 6677
+#    captcha: 999
