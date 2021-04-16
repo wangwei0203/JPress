@@ -36,3 +36,10 @@ class GetLog:
             cls.__logger.addHandler(th)
             # 返回日志器
         return cls.__logger
+
+
+# if __name__ == '__main__':
+#     log = GetLog().get_logger()
+#     log.info("测试信息级别日志")
+#     log.error("测试错误级别")
+#     log.warning("测试警告级别")

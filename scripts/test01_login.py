@@ -20,9 +20,10 @@ from page.page_in import PageIn
 from tool.get_driver import GetDriver
 import unittest
 from ddt import ddt, data, unpack, file_data
+from tool.get_log import GetLog
 from tool.read_userYaml import read_yaml
 
-# 初始化数据
+log = GetLog.get_logger()
 excepted = None
 title = None
 
@@ -112,6 +113,7 @@ class TestLogin(unittest.TestCase):
         try:
             assert self.title == self.login.page_get_title()
         except Exception as e:
+            log.error("断言出错,错误信息:{}".format(e))
             print("错误原因", e)
             # 截图
             self.login.base_save_screenshot(img_doc='登录页面截图')

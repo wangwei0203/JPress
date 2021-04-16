@@ -255,6 +255,74 @@ driver（获取driver、退出driver）
         4.参数化引用：@pytest.mark.parametrize("参数1,参数2,参数3",列表嵌套元组)
 
 
+本小节总结：
+登录（失败截图调用）
+    一.重点
+        1.截图并写入报告方法封装1
+        # 获取图片路径并通过动态时间+异常截图.png组合方式拼接
+        filename = './image' + '/' + strftime("%Y-%m-%d-%H-%M-%S", localtime(time())) + '-' + '异常截图.png'
+        # （1）截图方法
+        def base_get_img(self):
+            # 1.截图保存图片路径
+            self.driver.get_screenshot_as_file(filename)
+            # 2.调用图片写入报告方法
+            self.__base_write_img()
+
+        # （2）将图片写入报告方法（私有方法）
+        def __base_write_img(self):
+            with open(filename, mode='rb') as f:
+                file = f.read()
+            # 调用allure报告附加描述方法
+            allure.attach(file, '附件截图', allure.attachment_type.PNG)
+
+        # 截图并写入报告方法封装2
+        def base_save_screenshot(self, img_doc):
+            """
+            页面截屏保存截图
+            :param img_doc: 截图说明
+            :return:
+            """
+            file_name = './image' + "\\{}_{}.png".format(datetime.strftime(datetime.now(), "%Y-%m-%d-%H-%M-%S"), img_doc)
+            self.driver.save_screenshot(file_name)
+            with open(file_name, mode='rb') as f:
+                file = f.read()
+            allure.attach(file, img_doc, allure.attachment_type.PNG)
+
+        # 2.调用方法
+          （1）截图：
+            self.driver.get_screenshot_as_file(filename)
+          （2）写图：
+                allure.attach("读取文件流", '截图描述', '图片类型')
+
+        # 3.在线生成allure报告 allure serve report
+
+        # 4.脚本(测试用例)层调用封装截图方法  一般情况下：断言--截图——日志搭配使用
+        try:
+            # 断言
+            assert self.excepted == actual
+        except Exception as e:
+            print("错误原因", e)
+            # 截图
+            self.login.base_save_screenshot(img_doc='登录页面截图')
+            # self.login.base_get_img()
+            # 抛出异常
+            raise
+
+# 本小节总结：
+登录（日志器封装）
+    一.重点：
+        a.日志组件组成：
+          (1) 格式器：日志输出格式
+          (2) 处理器：处理日志信息
+          (3) 日志器：日志调用入口
+          (4) 过滤器：过滤信息
+
+        b.关系：
+          (1) 日志器添加处理器
+          (2) 处理器添加格式器
+
+        c.确保调用多次时，使用的是同一个日志器（判断为空时设置）
+
 
 
 
