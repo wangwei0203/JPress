@@ -61,6 +61,7 @@ class TestLogin(unittest.TestCase):
             # 断言
             assert self.excepted == actual
         except Exception as e:
+            log.error("断言出错,错误信息:{}".format(e))
             print("错误原因", e)
             # 截图
             self.login.base_save_screenshot(img_doc='登录页面截图')
@@ -78,6 +79,7 @@ class TestLogin(unittest.TestCase):
             # 断言
             assert self.excepted == actual
         except Exception as e:
+            log.error("断言出错,错误信息:{}".format(e))
             print("错误原因", e)
             # 截图
             self.login.base_save_screenshot(img_doc='登录页面截图')
@@ -95,6 +97,7 @@ class TestLogin(unittest.TestCase):
             # 断言
             assert self.excepted == actual
         except Exception as e:
+            log.error("断言出错,错误信息:{}".format(e))
             print("错误原因", e)
             # 截图
             self.login.base_save_screenshot(img_doc='登录页面截图')
@@ -121,5 +124,5 @@ class TestLogin(unittest.TestCase):
             raise
 
 
-if __name__ == '__main__':
-    pytest.main()
+# if __name__ == '__main__':
+#     pytest.main()

@@ -1,7 +1,4 @@
 # 导包
-
-
-
 import os
 import logging
 from logging import handlers
@@ -20,7 +17,7 @@ class GetLog:
             cls.__logger = logging.getLogger()
             # 修改默认级别
             cls.__logger.setLevel(logging.INFO)
-            log_path = BASE_PATH + os.sep + 'log' + os.sep + 'info.log'
+            log_path = BASE_PATH + os.sep + 'log' + os.sep + 'message.log'
             # 获取处理器
             th = logging.handlers.TimedRotatingFileHandler(filename=log_path,
                                                            when="midnight",
