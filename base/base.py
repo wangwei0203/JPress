@@ -58,7 +58,7 @@ class Base:
         log.info("正在对:{}元素执行清空操作！".format(loc))
         el.clear()
         # 3.输入操作
-        log.info("正在对:{}元素执行输入：{}操作！".format(loc, text))
+        log.info("正在对:{}元素执行输入{}操作！".format(loc, text))
         el.send_keys(text)
 
     # 点击方法封装

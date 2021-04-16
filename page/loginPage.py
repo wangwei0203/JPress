@@ -75,7 +75,7 @@ class LoginPage(Base):
     """调用相同页面操作步骤，跨页面不考虑"""
 
     def page_login(self, user, pwd, captcha):
-        log.info("正在调用JPress后台登录业务方法,用户名:{} 密码{}".format(user, pwd, captcha))
+        log.info("正在调用JPress后台登录业务方法,用户名:{},密码:{},验证码:{}".format(user, pwd, captcha))
         self.page_input_user(user)
         self.page_input_pwd(pwd)
         self.page_input_verify(captcha)
