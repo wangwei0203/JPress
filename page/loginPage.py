@@ -54,16 +54,15 @@ class LoginPage(Base):
 
     def page_add_cookie(self):
         self.driver.add_cookie({"name": "_jfinal_captcha",
-                                "value": "1214bfff035c4767b8e33bac36294b1f"})
+                                "value": "9465b06f604f43cbb30d4d3a73f2b0ea"})
         self.driver.add_cookie({"name": "_jpanonym",
-                                "value": "MzEwZDY4ZmFkZGY1YjY2M2EwMzY1NjY0NGYyMDczOWIjMTYxODI3Njc4MTQwMyMzMTUzNjAwMCNORE15Tm1JMVpqWTROVEUxTkRWaU1qbGtObVExTkRBM1kySXdPVFJsTVdJPQ=="})
-        self.driver.add_cookie({"name": "Hm_lpvt_bfe2407e37bbaa8dc195c5db42daf96a", "value": "1618277128"})
-        self.driver.add_cookie({"name": "Hm_lvt_bfe2407e37bbaa8dc195c5db42daf96a", "value": "1618277128"})
-        self.driver.add_cookie({"name": "_jpanonym",
-                                "value": "MWM5YzE0Zjg0NDM5ZjhmNzEwOTI1Mzc0YjQxZDQzYzIjMTYxODI3Njc0Njc0MSMzMTUzNjAwMCNPREl6TmpFNU9HWTJNVEE1TkRNMVl6ZzJNREEwTVRReE9ERmpPRFU1TVRVPQ=="})
+                                "value": "ZTdiMjMwM2E1ZmQwNmNiMDAxZmNjNTM2ODU3MGY3MjIjMTYxODkzNTQyNzMzMCMzMTUzNjAwMCNOV0ZtWmpoak9HWXhabVUyTkRjek5qZ3hOamhoTmpCbVpqazVaVEUyT1dFPQ=="})
+        self.driver.add_cookie({"name": "Hm_lpvt_bfe2407e37bbaa8dc195c5db42daf96a", "value": "1618994438"})
+        self.driver.add_cookie({"name": "Hm_lvt_bfe2407e37bbaa8dc195c5db42daf96a", "value": "1618994438"})
         self.driver.add_cookie({"name": "_jpuid",
-                                "value": "Mjc3MjIyNzgxZDI5YWMwNTEzNmM0OWUyZTE4YzhiMjQjMTYxODI3NzEyNTg1MyMxNzI4MDAjTVE9PQ=="})
-        self.driver.add_cookie({"name": "csrf_token", "value": "0eac592f934343ac904da9b0e4a4d93c"})
+                                "value": "MWFmNWE5NDgzMzM4ZjU1YjYwNWQzNjk2MDZkNThkODQjMTYxODk5NDQzNjE5MyMxNzI4MDAjTVE9PQ=="})
+        self.driver.add_cookie({"name": "csrf_token", "value": "3d3f3c7eb5da4c9cbf61af4ae4a8dfd8"})
+        
         sleep(3)
         self.driver.get("http://localhost:8088/jpress/admin/index")
 
