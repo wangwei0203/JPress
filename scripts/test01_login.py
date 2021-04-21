@@ -116,8 +116,9 @@ class TestLogin(unittest.TestCase):
         try:
             assert self.title == self.login.page_get_title()
         except Exception as e:
-            log.error("断言出错,错误信息:{}".format(e))
+            # log.error("断言出错,错误信息:{}".format(e))
             print("错误原因", e)
+            sleep(5)
             # 截图
             self.login.base_save_screenshot(img_doc='登录页面截图')
             # 抛出异常
