@@ -18,6 +18,7 @@ class GetDriver:
     @classmethod
     def get_web_driver(cls, url):
         option = webdriver.ChromeOptions()
+        option.binary_location=r'C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chrome.exe'
         option.add_experimental_option('useAutomationExtension', False)
         option.add_experimental_option('excludeSwitches', ['enable-automation'])
         # 判断是否为空
